@@ -1,4 +1,4 @@
-package decoder;
+package MusicProcessor.decoder;
 
 /**
  * Created by Jerry on 2017/1/25.

@@ -1,11 +1,9 @@
-package decoder;
+package MusicProcessor.decoder;
 
 import javazoom.jl.decoder.*;
 import javazoom.jl.player.AudioDevice;
 
-import java.io.BufferedInputStream;
 import java.io.FileInputStream;
-import java.io.InputStream;
 
 /**
  * Created by Jerry on 2017/1/25.

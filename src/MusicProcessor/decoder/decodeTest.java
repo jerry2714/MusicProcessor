@@ -1,4 +1,4 @@
-package decoder;
+package MusicProcessor.decoder;
 
 import javazoom.jl.player.AudioDevice;
 import javazoom.jl.player.FactoryRegistry;
