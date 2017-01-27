@@ -9,13 +9,13 @@ import java.io.InputStream;
 
 /**
  * Created by Jerry on 2017/1/25.
+ * create github repo on 2017/1/27.
  */
 
 public class Mp3Decoder implements MusicDecoder {
     private Bitstream bitstream;
     private Decoder decoder;
     private Boolean ready = false;
-
 
 
     public Mp3Decoder(String fileName)
