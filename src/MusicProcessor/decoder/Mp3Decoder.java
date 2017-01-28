@@ -12,7 +12,7 @@ import java.io.FileInputStream;
 public class Mp3Decoder implements MusicDecoder {
     private Bitstream bitstream;
     private Decoder decoder;
-    private Boolean ready = false;
+    private boolean ready = false;
 
 
     public Mp3Decoder(String fileName)
@@ -41,11 +41,7 @@ public class Mp3Decoder implements MusicDecoder {
         }
     }
 
-    /**
-     * 取得下一個解碼後的frame
-     * @return   PCM data
-     *
-     */
+
     public short[] decodeFrame()
     {
         if(!ready) return null;
