@@ -10,7 +10,7 @@ import java.awt.event.WindowEvent;
 public class GPlayer{
 
     private Frame frm;
-
+    private SpectrumArea spectrumArea;
     public static void main(String args[])
     {
         GPlayer gPlayer = new GPlayer();
@@ -23,6 +23,10 @@ public class GPlayer{
         frm.setSize(800,600);
         frm.addWindowListener(GeneralWinListener.getInstance());
 
+        spectrumArea = new SpectrumArea();
+        spectrumArea.init(frm.getWidth(), frm.getHeight());
+
+        frm.add(spectrumArea);
         frm.setVisible(true);
     }
 
