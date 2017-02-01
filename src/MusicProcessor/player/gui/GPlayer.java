@@ -15,6 +15,7 @@ public class GPlayer{
     {
         GPlayer gPlayer = new GPlayer();
         gPlayer.init();
+        gPlayer.spectrumArea.loop.start();
     }
 
     public void init()

@@ -10,8 +10,8 @@ import java.util.ArrayList;
  */
 public class AppCanvas extends Canvas {
 
-    BufferedImage outputBuffer = null;
-    Graphics2D g2d;
+    private BufferedImage outputBuffer = null;
+    private Graphics2D g2d;
     protected ArrayList<VisibleObject> observedList = new ArrayList<>();    //所有將會被畫在此繪圖區的物件
 
     /**
@@ -55,12 +55,17 @@ public class AppCanvas extends Canvas {
     private void sendGraphics()
     {
         for(VisibleObject o : observedList)
-            o.getCanvasGraphics(g2d);
+            o.setCanvasGraphics(g2d);
     }
     private void sendGraphics(VisibleObject o)
     {
-        o.getCanvasGraphics(g2d);
+        o.setCanvasGraphics(g2d);
     }
+
+    public void draw(){}
+
+    @Override
+    public void update(Graphics g){paint(g);}
     @Override
     public void paint(Graphics g) {
         g.drawImage(outputBuffer, 0, 0, getWidth(), getHeight(), this);

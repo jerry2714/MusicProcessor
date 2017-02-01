@@ -7,13 +7,13 @@ import java.awt.image.BufferedImage;
  * Created by Jerry on 2017/2/1.
  */
 
-class VisibleObject implements Comparable<VisibleObject>
+abstract class VisibleObject implements Comparable<VisibleObject>
 {
     private int priority;//繪圖優先權(最大的最後繪製，所以蓋在最上面)
     BufferedImage img;	//此物件目前的完整圖形
     int ox, oy, x, y;	//上一次座標、新座標
     int width, height;	//長寬
-    Graphics2D g2d;
+    protected Graphics2D canvasGraph;
 
     /**
      * 設定此物件會被畫在哪一個繪圖區裡面
@@ -25,12 +25,10 @@ class VisibleObject implements Comparable<VisibleObject>
     }
 
     /**
-     * 取得可繪圖區的Graphics，透過這個Graphics來將此物件畫上去
+     * 設定可繪圖區的Graphics，透過這個Graphics來將此物件畫上去
      * @param g
      */
-    public void getCanvasGraphics(Graphics2D g)
-    {
-        g2d = g;
+    public void setCanvasGraphics(Graphics2D g){canvasGraph = g;
     }
 
     public void setPriority(int a){priority = a;}
@@ -39,4 +37,7 @@ class VisibleObject implements Comparable<VisibleObject>
     {
         return this.priority - go.priority;
     }
+
+    public abstract void draw();
+
 }
