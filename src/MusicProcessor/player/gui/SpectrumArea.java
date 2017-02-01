@@ -8,26 +8,16 @@ import java.awt.image.BufferedImage;
  */
 public class SpectrumArea extends AppCanvas{
 
-    Spectrums spectrums;
+   // Spectrums spectrums;
     UpdateLoop loop = new UpdateLoop(this);
 
     public SpectrumArea()
     {
-        spectrums = new Spectrums(800, 600);
-        this.add(spectrums);
-        loop.setTimeInterval(100000);
-    }
-    public void draw()
-    {
-        spectrums.draw();
+        //spectrums = new Spectrums(800, 600);
+        //this.add(spectrums);
     }
 
-    public void setSpectrum(double[] d)
-    {
-        spectrums.spectrum = d;
-    }
-
-    class Spectrums extends VisibleObject
+    /*class Spectrums extends VisibleObject
     {
         double spectrum[] = new double[]{0};
 
@@ -37,7 +27,7 @@ public class SpectrumArea extends AppCanvas{
             g2d = img.createGraphics();
             x = y = 0;
         }
-        public void draw()
+        /*public void draw()
         {
 
             g2d.setColor(Color.cyan);
@@ -49,8 +39,8 @@ public class SpectrumArea extends AppCanvas{
                 g2d.fillRect(i*w, (int)(img.getHeight() - spectrum[i]), w, (int)spectrum[i]);
             }
             /*g2d.draw(new Rectangle(0, 0, 100, 100));
-            x++; y++;*/
-            canvasGraph.drawImage(img, x, y, null);
+            x++; y++;
+            //canvasGraph.drawImage(img, x, y, null);
         }
-    }
+    }*/
 }
