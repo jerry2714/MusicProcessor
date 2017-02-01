@@ -66,5 +66,6 @@ public class Mp3Decoder implements MusicDecoder {
             audev.open(decoder);
     }
 
+    public int getSampleRate(){return decoder.getOutputFrequency();}
 
 }

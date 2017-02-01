@@ -6,7 +6,7 @@ package MusicProcessor.player.gui;
 class UpdateLoop extends Thread
 {
     AppCanvas updateArea;
-
+    private long timeInterval = 0;
     public UpdateLoop(){}
     public UpdateLoop(AppCanvas a)
     {
@@ -15,10 +15,12 @@ class UpdateLoop extends Thread
     @Override
     public void run()
     {
+        System.out.println("loop start");
         long nano = System.nanoTime();
+
         while(true)
         {
-            if(System.nanoTime() - nano > 1000000000)
+            if(System.nanoTime() - nano > timeInterval)
             {
                 nano = System.nanoTime();
                 updateArea.draw();
@@ -27,6 +29,9 @@ class UpdateLoop extends Thread
         }
     }
 
-
+    public void setTimeInterval(long t)
+    {
+        timeInterval = t;
+    }
     public void setUpdateArea(AppCanvas a){updateArea = a;}
 }

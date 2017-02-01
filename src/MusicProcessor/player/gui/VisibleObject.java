@@ -14,6 +14,7 @@ abstract class VisibleObject implements Comparable<VisibleObject>
     int ox, oy, x, y;	//上一次座標、新座標
     int width, height;	//長寬
     protected Graphics2D canvasGraph;
+    protected Graphics2D g2d;
 
     /**
      * 設定此物件會被畫在哪一個繪圖區裡面
@@ -28,8 +29,7 @@ abstract class VisibleObject implements Comparable<VisibleObject>
      * 設定可繪圖區的Graphics，透過這個Graphics來將此物件畫上去
      * @param g
      */
-    public void setCanvasGraphics(Graphics2D g){canvasGraph = g;
-    }
+    public void setCanvasGraphics(Graphics2D g){canvasGraph = g;}
 
     public void setPriority(int a){priority = a;}
     public void setPosition(int x, int y){this.x = x; this.y = y;}
