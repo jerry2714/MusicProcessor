@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class AppCanvas extends Canvas {
 
     private BufferedImage outputBuffer = null;
-    private Graphics2D g2d;
+    protected Graphics2D g2d;
     protected ArrayList<VisibleObject> observedList = new ArrayList<>();    //所有將會被畫在此繪圖區的物件
 
     /**
@@ -29,7 +29,7 @@ public class AppCanvas extends Canvas {
         super.setSize(width, height);
         outputBuffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         g2d = outputBuffer.createGraphics();
-        g2d.clearRect(0, 0, width, height);
+        //g2d.clearRect(0, 0, width, height);
         sendGraphics();
     }
 

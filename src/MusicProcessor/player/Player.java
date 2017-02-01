@@ -44,7 +44,7 @@ public class Player extends Thread{
                     continue;
                 }
                 spectrum = simpleFFT.getSpectrum(pcm);
-                //for(double d : spectrum)
+                System.out.print(1);
                 audev.write(pcm, 0, pcm.length);
                 if(rateFreq == 0)
                 {
@@ -62,18 +62,20 @@ public class Player extends Thread{
         System.out.println("播放完畢");
     }
 
-    public double[] getCurrentSpectrum()
+    public int[] getCurrentSpectrum()
     {
         if(spectrum == null) return null;
-        double[] s = new double[32];
-        int n = spectrum.length / 32;
+        final int amount = 256;
+        int[] s = new int[amount];
+        int n = spectrum.length / amount;
         for(int i = 0; i < s.length; i++)
         {
-            s[i] = 0;
+            /*s[i] = 0;
             for(int j = 0; j < n; j++)
-                if(s[i] < spectrum[i * n + j]) s[i] = spectrum[i*n + j];
-
-            s[i] = s[i] / 100;
+                //if(s[i] < spectrum[i * n + j]) s[i] = (int)spectrum[i*n + j];
+                s[i] += (int)spectrum[i*n + j];*/
+            s[i] = (int) spectrum[i*n] / 200;
+            //s[i] = s[i] / 32 / 1000;
         }
         return s;
     }

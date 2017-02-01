@@ -46,16 +46,24 @@ public class SimpleFFT {
     {
         if(fft == null) return null;
         double spectrum[] = new double[fft.length/2];
-
+        double n1, n2;
         if(fft.length % 2 == 0) {
             spectrum[0] = fft[0];
             for (int i = 1; i < fft.length / 2; i++)
-                spectrum[i] = sqrt((fft[2 * i] * fft[2 * i] + fft[2 * i + 1] * fft[2 * i + 1]));
+            {
+                n1 = fft[2*i]/* - fft[0]*/;
+                n2 = fft[2*i + 1] /*- fft[0]*/;
+                spectrum[i] = sqrt(n1*n1 + n2*n2);
+            }
         }
         else {
             spectrum[0] = fft[0];
             for (int i = 1; i < fft.length / 2 - 1; i++)
-                spectrum[i] = sqrt((fft[2 * i] * fft[2 * i] + fft[2 * i + 1] * fft[2 * i + 1]));
+            {
+                n1 = fft[2*i] - fft[0];
+                n2 = fft[2*i + 1] - fft[0];
+                spectrum[i] = sqrt(n1*n1 + n2*n2);
+            }
             spectrum[fft.length/2 -1] = sqrt(fft[fft.length-1]*fft[fft.length-1] + fft[1]*fft[1]);
         }
         return spectrum;
