@@ -47,16 +47,16 @@ public class GPlayer extends Thread{
 
     public void run()
     {
-        player.start();
-        long timeInterval = 26500000;
+        long timeInterval = 26000000;
         long nano;
         nano = System.nanoTime();
         while(true)
         {
+
             while(System.nanoTime() - nano < timeInterval);
             nano = System.nanoTime();
-            spectrumArea.setSpectrum(player.getCurrentSpectrum());
-            System.out.println(2);
+            spectrumArea.setSpectrum(player.playOneFrame());
+            //System.out.println(2);
             spectrumArea.draw();
             spectrumArea.repaint();
         }

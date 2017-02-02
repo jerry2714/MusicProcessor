@@ -56,7 +56,7 @@ public class SimpleFFT {
                 spectrum[i] = sqrt(n1*n1 + n2*n2);
             }
         }
-        else {
+        else {  //some problems here
             spectrum[0] = fft[0];
             for (int i = 1; i < fft.length / 2 - 1; i++)
             {

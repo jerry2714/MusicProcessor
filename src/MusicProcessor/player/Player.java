@@ -44,7 +44,7 @@ public class Player extends Thread{
                     continue;
                 }
                 spectrum = simpleFFT.getSpectrum(pcm);
-                System.out.print(1);
+                //System.out.print(1);
                 audev.write(pcm, 0, pcm.length);
                 if(rateFreq == 0)
                 {
@@ -53,6 +53,26 @@ public class Player extends Thread{
                 }
             }
         }catch (Exception e){}
+    }
+
+    public int[] playOneFrame()
+    {
+        if(audev == null || mp3Decoder == null)
+            return null;
+        pcm = mp3Decoder.decodeFrame();
+        if(pcm == null)
+            return  null;
+        try{
+            spectrum = simpleFFT.getSpectrum(pcm);
+            //System.out.print(1);
+            audev.write(pcm, 0, pcm.length);
+            if(rateFreq == 0)
+            {
+                rateFreq = mp3Decoder.getSampleRate();
+                System.out.println("sample rate: "+rateFreq);
+            }
+        }catch (Exception e){}
+        return getCurrentSpectrum();
     }
 
     @Override
@@ -74,10 +94,11 @@ public class Player extends Thread{
             for(int j = 0; j < n; j++)
                 //if(s[i] < spectrum[i * n + j]) s[i] = (int)spectrum[i*n + j];
                 s[i] += (int)spectrum[i*n + j];*/
-            s[i] = (int) spectrum[i*n] / 200;
+            s[i] = (int) spectrum[i] / spectrum.length;
             //s[i] = s[i] / 32 / 1000;
         }
         return s;
     }
+
 }
 

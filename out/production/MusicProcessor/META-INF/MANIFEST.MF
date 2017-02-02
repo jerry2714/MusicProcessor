@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
 Class-Path: jl1.0.1.jar
 anifest-Version: 1.0
-Main-Class: MusicProcessor.decoder.decodeTest
+Main-Class: MusicProcessor.player.gui.GPlayer
 
