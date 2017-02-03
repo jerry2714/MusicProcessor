@@ -3,15 +3,10 @@ package MusicProcessor.player.gui;
 /**
  * Created by Jerry on 2017/2/1.
  */
-class UpdateLoop extends Thread
+abstract class UpdateLoop extends Thread
 {
-    AppCanvas updateArea;
     private long timeInterval = 0;
     public UpdateLoop(){}
-    public UpdateLoop(AppCanvas a)
-    {
-        setUpdateArea(a);
-    }
     @Override
     public void run()
     {
@@ -20,12 +15,10 @@ class UpdateLoop extends Thread
 
         while(true)
         {
-            if(System.nanoTime() - nano > timeInterval)
-            {
-                nano = System.nanoTime();
-                updateArea.draw();
-                updateArea.repaint();
-            }
+            while(System.nanoTime() - nano < timeInterval);
+            nano = System.nanoTime();
+
+            excute();
         }
     }
 
@@ -33,5 +26,6 @@ class UpdateLoop extends Thread
     {
         timeInterval = t;
     }
-    public void setUpdateArea(AppCanvas a){updateArea = a;}
+
+    abstract public void excute();
 }

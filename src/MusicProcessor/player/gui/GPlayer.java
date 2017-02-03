@@ -14,6 +14,22 @@ public class GPlayer extends Thread{
     private Frame frm;
     private SpectrumArea spectrumArea;
     private Player player;
+    private Loop loop = new Loop();
+    class Loop extends UpdateLoop
+    {
+        boolean draw = true;
+        @Override
+        public void excute() {
+            spectrumArea.setSpectrum(player.playOneFrame());
+            //System.out.println(2);
+            if(draw) {
+                spectrumArea.draw();
+                spectrumArea.repaint();
+            }
+            draw = !draw;
+        }
+    }
+
     public static void main(String args[])
     {
         GPlayer gPlayer = new GPlayer();
@@ -25,21 +41,18 @@ public class GPlayer extends Thread{
     public void init(String fileName)
     {
         frm = new Frame("GPlayer");
-        frm.setSize(1000,800);
-        frm.setLayout(null);
+        frm.setSize(1920,800);
+        frm.setLayout(new BorderLayout());
         frm.addWindowListener(GeneralWinListener.getInstance());
 
         spectrumArea = new SpectrumArea();
-        spectrumArea.init(800, 600);
-        //spectrumArea.setLocation(100, 100);
         Panel p = new Panel();
-        p.setLayout(null);
-        p.setSize(800, 600);
-        p.setLocation(100, 100);
-        p.add(spectrumArea);
+        p.setLayout(new BorderLayout());
         frm.add(p);
+        p.add(spectrumArea);
         frm.setBackground(Color.blue);
         frm.setVisible(true);
+        spectrumArea.init(p.getWidth(), p.getHeight());
 
         player = new Player();
         player.init(fileName);
@@ -47,19 +60,8 @@ public class GPlayer extends Thread{
 
     public void run()
     {
-        long timeInterval = 26000000;
-        long nano;
-        nano = System.nanoTime();
-        while(true)
-        {
-
-            while(System.nanoTime() - nano < timeInterval);
-            nano = System.nanoTime();
-            spectrumArea.setSpectrum(player.playOneFrame());
-            //System.out.println(2);
-            spectrumArea.draw();
-            spectrumArea.repaint();
-        }
+        loop.setTimeInterval(26000000);
+        loop.start();
     }
 
 }

@@ -1,7 +1,7 @@
 package MusicProcessor.player;
 
 import MusicProcessor.decoder.Mp3Decoder;
-import MusicProcessor.processor.SimpleFFT;
+import MusicProcessor.processor.SimpleSpectrumAnalyzer;
 import javazoom.jl.player.AudioDevice;
 import javazoom.jl.player.FactoryRegistry;
 
@@ -17,7 +17,7 @@ public class Player extends Thread{
 
     int rateFreq;
 
-    SimpleFFT simpleFFT = new SimpleFFT();
+    SimpleSpectrumAnalyzer simpleSpectrumAnalyzer = new SimpleSpectrumAnalyzer();
 
     public void init(String fileName)
     {
@@ -43,7 +43,7 @@ public class Player extends Thread{
                     ret = false;
                     continue;
                 }
-                spectrum = simpleFFT.getSpectrum(pcm);
+                spectrum = simpleSpectrumAnalyzer.getSpectrum(pcm);
                 //System.out.print(1);
                 audev.write(pcm, 0, pcm.length);
                 if(rateFreq == 0)
@@ -63,9 +63,14 @@ public class Player extends Thread{
         if(pcm == null)
             return  null;
         try{
-            spectrum = simpleFFT.getSpectrum(pcm);
-            //System.out.print(1);
             audev.write(pcm, 0, pcm.length);
+            int sum = 0;
+            for(int a : pcm)
+                sum += a;
+            sum /= pcm.length;
+            for(int i = 0; i < pcm.length; i++)
+                pcm[i] -= sum;
+            spectrum = simpleSpectrumAnalyzer.getSpectrum(pcm);
             if(rateFreq == 0)
             {
                 rateFreq = mp3Decoder.getSampleRate();
@@ -90,13 +95,12 @@ public class Player extends Thread{
         int n = spectrum.length / amount;
         for(int i = 0; i < s.length; i++)
         {
-            /*s[i] = 0;
-            for(int j = 0; j < n; j++)
-                //if(s[i] < spectrum[i * n + j]) s[i] = (int)spectrum[i*n + j];
-                s[i] += (int)spectrum[i*n + j];*/
-            s[i] = (int) spectrum[i] / spectrum.length;
+            s[i] = (int) spectrum[i] / s.length;
             //s[i] = s[i] / 32 / 1000;
         }
+        /*int s[] = new int[spectrum.length/2];
+        for(int i = 0; i < s.length; i++)
+            s[i] = (int) (simpleSpectrumAnalyzer.getHannWindow()[i] * 1000);*/
         return s;
     }
 
