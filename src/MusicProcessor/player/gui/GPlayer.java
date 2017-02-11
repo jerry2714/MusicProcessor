@@ -15,7 +15,7 @@ public class GPlayer extends Thread{
     private SpectrumArea spectrumArea;
     private Player player;
     private Loop loop = new Loop();
-    class Loop extends UpdateLoop
+    class Loop extends ThreadLoop
     {
         boolean draw = true;
         @Override
@@ -26,7 +26,7 @@ public class GPlayer extends Thread{
                 spectrumArea.draw();
                 spectrumArea.repaint();
             }
-            draw = !draw;
+          //  draw = !draw;
         }
     }
 

@@ -29,6 +29,9 @@ public class Player extends Thread{
         }catch (Exception e){}
     }
 
+    /**
+     * 一個簡單的播放功能，呼叫後會把一首音樂播完，播完後才會return，會占用執行緒
+     */
     public void play()
     {
         if(audev == null || mp3Decoder == null)
@@ -43,14 +46,7 @@ public class Player extends Thread{
                     ret = false;
                     continue;
                 }
-                spectrum = simpleSpectrumAnalyzer.getSpectrum(pcm);
-                //System.out.print(1);
                 audev.write(pcm, 0, pcm.length);
-                if(rateFreq == 0)
-                {
-                    rateFreq = mp3Decoder.getSampleRate();
-                    System.out.println("sample rate: "+rateFreq);
-                }
             }
         }catch (Exception e){}
     }
@@ -90,18 +86,46 @@ public class Player extends Thread{
     public int[] getCurrentSpectrum()
     {
         if(spectrum == null) return null;
-        final int amount = 256;
+
+        final int amount = 100;
+
         int[] s = new int[amount];
         int n = spectrum.length / amount;
+        //int s[] = SpectrumStrategy.excute(spectrum, mp3Decoder.getSampleRate());
         for(int i = 0; i < s.length; i++)
         {
-            s[i] = (int) spectrum[i] / s.length;
-            //s[i] = s[i] / 32 / 1000;
+            s[i] = (int) spectrum[i] /1000;
         }
-        /*int s[] = new int[spectrum.length/2];
-        for(int i = 0; i < s.length; i++)
-            s[i] = (int) (simpleSpectrumAnalyzer.getHannWindow()[i] * 1000);*/
         return s;
+    }
+
+    static class SpectrumStrategy
+    {
+        static final int ranges[][] = {{20, 60}, {60, 250}, {250, 500}, {500, 2000}, {2000, 4000}, {4000, 6000}};
+        static final int amount = ranges.length;
+        static int[] excute(double[] spectrum, int sampleRate)
+        {
+            int count = 0;
+            int max = 0;
+            int freq;
+            int band[] = new int[2];
+            int[] result = new int[amount];
+            for(int i = 0; i < ranges.length; i++)
+            {
+                max = 0;
+                band[0] = ranges[i][0] * spectrum.length / sampleRate;
+                band[1] = ranges[i][1] * spectrum.length / sampleRate;
+                result[i] = (int)spectrum[band[0]];
+            }
+            return result;
+        }
+
+       /* static double [] getBigest(double[] array, int index1, int index2)
+        {
+            if(index1 - index2 <= 0) return null;
+            double arr[] = new double[index1-index2+1];
+            for()
+        }*/
     }
 
 }

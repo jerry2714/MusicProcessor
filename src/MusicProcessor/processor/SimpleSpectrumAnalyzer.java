@@ -2,8 +2,10 @@ package MusicProcessor.processor;
 
 import org.jtransforms.fft.*;
 
-import static org.apache.commons.math3.util.FastMath.cos;
-import static org.apache.commons.math3.util.FastMath.sqrt;
+import static java.lang.Math.cos;
+import static java.lang.Math.log;
+import static java.lang.Math.sqrt;
+
 
 /**
  * Created by Jerry on 2017/1/30.
@@ -33,39 +35,23 @@ public class SimpleSpectrumAnalyzer {
     public double[] getFFTFromPCM(int[] pcm)
     {
         if(fft_1D == null)
-        {
             fft_1D = new DoubleFFT_1D(pcm.length);
-        }
         double[] fft = new double[pcm.length];
         for(int i = 0; i < pcm.length; i++)
             fft[i] = pcm[i];
         fft_1D.realForward(fft);
         return fft;
     }
+
     public double[] getMagnitude(double fft[])
     {
         if(fft == null) return null;
         double spectrum[] = new double[fft.length/2];
-        double n1, n2;
-        if(fft.length % 2 == 0) {
-            spectrum[0] = fft[0];
-            for (int i = 1; i < fft.length / 2; i++)
-            {
-                n1 = fft[2*i]/* - fft[0]*/;
-                n2 = fft[2*i + 1] /*- fft[0]*/;
-                spectrum[i] = sqrt(n1*n1 + n2*n2);
-            }
-        }
-        else {  //some problems here
-            spectrum[0] = fft[0];
-            for (int i = 1; i < fft.length / 2 - 1; i++)
-            {
-                n1 = fft[2*i] - fft[0];
-                n2 = fft[2*i + 1] - fft[0];
-                spectrum[i] = sqrt(n1*n1 + n2*n2);
-            }
-            spectrum[fft.length/2 -1] = sqrt(fft[fft.length-1]*fft[fft.length-1] + fft[1]*fft[1]);
-        }
+        //double n1, n2;
+        //spectrum[0] = abs(fft[0]);
+        for (int i = 0; i < fft.length / 2; i++)
+            spectrum[i] = sqrt(fft[2*i]*fft[2*i] + fft[2*i + 1]*fft[2*i + 1]);
+            //spectrum[i] = 10 * log(fft[2*i]*fft[2*i] + fft[2*i + 1]*fft[2*i + 1])/log(10);
         return spectrum;
     }
 
@@ -82,9 +68,8 @@ public class SimpleSpectrumAnalyzer {
         // use Hann window
         for(int i = 0; i < pcm.length; i++)
             inputArray[i] = (int)(pcm[i] * hannWindow[i]);
-
         return getMagnitude(getFFTFromPCM(inputArray));
     }
 
-    public double[] getHannWindow(){return hannWindow;}
+
 }
