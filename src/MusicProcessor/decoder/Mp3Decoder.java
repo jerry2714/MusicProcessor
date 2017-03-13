@@ -14,12 +14,11 @@ public class Mp3Decoder implements MusicDecoder {
     private Decoder decoder;
     private boolean ready = false;
 
-
+	
     public Mp3Decoder(String fileName)
     {
             if (fileName != null)
                init(fileName);
-            decoder = new Decoder();
     }
 
     /**
@@ -33,6 +32,7 @@ public class Mp3Decoder implements MusicDecoder {
                 FileInputStream fin = new FileInputStream(fileName);
                 //BufferedInputStream bin = new BufferedInputStream(fin);
                 bitstream = new Bitstream(fin);
+                decoder = new Decoder();
             }
             ready = true;
         }catch (Exception e)
