@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
 Class-Path: ./jl1.0.1.jar ./JTransforms-3.1-with-dependencies.jar
 anifest-Version: 1.0
-Main-Class: MusicProcessor.player.gui.GPlayer
+Main-Class: ledcubeproject.models.musicprocessor.player.gui.GPlayer
 

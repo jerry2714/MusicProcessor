@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MusicProcessor_with_dependencies">
+    <output-path>$PROJECT_DIR$/out/artifacts/MusicProcessor_with_dependencies</output-path>
+    <root id="archive" name="MusicProcessor_with_dependencies.jar">
+      <element id="module-output" name="MusicProcessor" />
+      <element id="library" level="project" name="jl1.0.1" />
+      <element id="library" level="project" name="JTransforms-3.1-with-dependencies" />
+    </root>
+  </artifact>
+</component>
